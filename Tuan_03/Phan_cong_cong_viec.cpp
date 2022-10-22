@@ -5,10 +5,13 @@ using namespace std;
 void enterTable(int , int [][100]);
 void showTable(int , int [][100]);
 void assignTask(int, int [][100], int []);
-void assignTaskOp2(int, int [][100], int []);
 int getMinTime(int, int [][100], int [], int);
 int findFirstIndex(int  [], int);
 void showResults(int[], int);
+void assignTaskOp2(int, int [][100], int []);
+int getMinTime2(int, int [][100], int [], int);
+int findFirstIndex2(int  [], int);
+void showResults2(int[], int);
 
 int main()
 {
@@ -20,7 +23,8 @@ int main()
     cin >> N;
     enterTable(N, table);
     showTable(N, table);
-    assignTask(N, table, results);
+    //assignTask(N, table, results);
+    assignTaskOp2(N, table, results);
     // b1: nhap bang cong viec = nhap mang 2 chieu => function
     // op1: nguoi tim viec 
     // b2: Xet hang => for 
@@ -30,13 +34,47 @@ int main()
     // op2: viec tim nguoi
     //  .................
     // b3: xuat ket qua 
-    showResults(results, N);
+    //showResults(results, N);
+    showResults2(results, N);
     return 0;
 }
 
-void assignTaskOp2(int, int [][100], int []){
+void assignTaskOp2(int N, int table [][100], int results []){
     // CODE HERE 
-    int task[N] = {0}
+    int staff[N] = {0};
+    for(int i=0; i<N; i++){
+    	int t = getMinTime2(i, table, staff, N);
+    	staff[t] = 1;
+    	results[i] = t;
+	}
+    
+}
+
+void showResults2(int results[], int N){
+    for(int i=0; i<N; i++){
+        cout << "Task " << i +1 << ": " << results[i] +1 << endl;
+    }
+}
+
+int getMinTime2(int collum, int table[][100], int staff[], int N){
+    // find first index 
+    int minIndex = findFirstIndex(staff, N);
+    for(int i=0; i<N; i++){
+        if(table[i][collum] < table[minIndex][collum] && staff[i]==0 ){
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+int findFirstIndex2(int staff [], int N)
+{   
+    for(int i=0; i<N; i++){
+        if(staff[i] == 0){
+            return i;
+        }
+    }
+    return -1;
 }
 
 void enterTable(int N, int table[][100]){
